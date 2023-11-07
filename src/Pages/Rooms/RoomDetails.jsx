@@ -41,7 +41,11 @@ const RoomDetails = () => {
             name,
             email,
             date,
-            available_seats: seat
+            available_seats: seat,
+            image,
+            room_name,
+            price
+
 
         }
         console.log(bookings);
@@ -67,9 +71,9 @@ const RoomDetails = () => {
             <div>
                 <img className="p-4 py-6 md:w-full rounded-[40px]" src="https://i.ibb.co/xfLsypD/495698796.jpg" alt="product image" />
                 <div className='grid grid-cols-3'>
-                    <img src="https://i.ibb.co/xfLsypD/495698796.jpg" alt="" className='p-4 ' />
-                    <img src="https://i.ibb.co/xfLsypD/495698796.jpg" alt="" className='p-4 ' />
-                    <img src="https://i.ibb.co/xfLsypD/495698796.jpg" alt="" className='p-4 ' />
+                    <img src="https://i.ibb.co/xfLsypD/495698796.jpg" alt="" className='p-4 transition hover:scale-150' />
+                    <img src="https://i.ibb.co/xfLsypD/495698796.jpg" alt="" className='p-4 transition hover:scale-150' />
+                    <img src="https://i.ibb.co/xfLsypD/495698796.jpg" alt="" className='p-4 transition hover:scale-150' />
                 </div>
             </div>
 

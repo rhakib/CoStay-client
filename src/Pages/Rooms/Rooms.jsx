@@ -6,9 +6,7 @@ import RoomsCard from './RoomsCard';
 import { useLoaderData, useParams } from 'react-router-dom';
 
 const Rooms = () => {
-
-    const room = useLoaderData()
-    console.log(room);
+   
 
     const axios = useAxios()
 

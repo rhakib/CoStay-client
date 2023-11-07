@@ -4,6 +4,7 @@ import Layout from "../Components/Layout/Layout";
 import Home from "../Pages/Home";
 import Rooms from "../Pages/Rooms/Rooms";
 import RoomDetails from "../Pages/Rooms/RoomDetails";
+import MyBookings from "../Pages/Bookings/MyBookings";
 
 const router = createBrowserRouter([
     {
@@ -17,12 +18,16 @@ const router = createBrowserRouter([
             {
                 path: '/rooms',
                 element: <Rooms></Rooms>
-               
+
             },
             {
                 path: '/rooms/:id',
                 element: <RoomDetails></RoomDetails>,
-                loader: ()=> fetch('http://localhost:5000/rooms')
+                loader: () => fetch('http://localhost:5000/rooms')
+            },
+            {
+                path: '/bookings',
+                element: <MyBookings></MyBookings>
             }
         ]
     },
