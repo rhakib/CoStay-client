@@ -3,6 +3,7 @@ import { createBrowserRouter } from "react-router-dom";
 import Layout from "../Components/Layout/Layout";
 import Home from "../Pages/Home";
 import Rooms from "../Pages/Rooms/Rooms";
+import RoomDetails from "../Pages/Rooms/RoomDetails";
 
 const router = createBrowserRouter([
     {
@@ -14,8 +15,14 @@ const router = createBrowserRouter([
                 element: <Home></Home>
             },
             {
-                path: 'rooms',
+                path: '/rooms',
                 element: <Rooms></Rooms>
+               
+            },
+            {
+                path: '/rooms/:id',
+                element: <RoomDetails></RoomDetails>,
+                loader: ()=> fetch('http://localhost:5000/rooms')
             }
         ]
     },
