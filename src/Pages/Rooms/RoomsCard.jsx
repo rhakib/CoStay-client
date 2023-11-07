@@ -9,6 +9,9 @@ const RoomsCard = ({room}) => {
             <Link to={`/rooms/${_id}`}><img src="https://i.ibb.co/xfLsypD/495698796.jpg" alt="" className='' /></Link>
                 <h3 className='text-xl'>{room_name}</h3>
                 <Link to={`/rooms/${_id}`}>View</Link>
+                {
+                    available_seats == 0 ? <h2>Unavailable</h2> :  <Link to={`/rooms/${_id}`}>Book Now</Link>
+                }
             </div>
         </div>
     );
