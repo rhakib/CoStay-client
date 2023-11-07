@@ -1,6 +1,8 @@
 import React from 'react';
-import useAxios from '../Hooks/useAxios';
+import useAxios from '../../Hooks/useAxios';
 import { useQuery } from '@tanstack/react-query';
+import Container from '../../Container/Container';
+import RoomsCard from './RoomsCard';
 
 const Rooms = () => {
 
@@ -9,7 +11,7 @@ const Rooms = () => {
     const getRooms = async () => {
         const res = await axios.get(`/rooms`)
         return res;
-        
+
     }
 
     const {
@@ -21,13 +23,18 @@ const Rooms = () => {
         queryKey: ['rooms',],
         queryFn: getRooms
     })
-    console.log(rooms.data); 
+    console.log(rooms?.data);
 
 
     return (
-        <div>
-            
-        </div>
+        <Container>
+            <div className='grid md:grid-cols-3 gap-5'>
+                {
+                    rooms?.data.map(room => <RoomsCard key={room._id} room={room}></RoomsCard>)
+
+                }
+            </div>
+        </Container>
     );
 };
 
