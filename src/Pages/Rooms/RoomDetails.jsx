@@ -77,7 +77,7 @@ const RoomDetails = () => {
                 </div>
             </div>
 
-            <div className="flex flex-col p-4 md:p-0 justify-center space-y-3">
+            <div className="flex flex-col p-4 md:p-1 justify-center space-y-3">
 
                 <h5 className="text-5xl font-semibold tracking-tight  ">{room_name}</h5>
                 <h5 className="tracking-tight text-gray-900 dark:text-white"></h5>
