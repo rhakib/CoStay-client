@@ -8,6 +8,7 @@ const RoomsCard = ({ room }) => {
             <div className='relative'>
                 <Link to={`/rooms/${_id}`}><img src="https://i.ibb.co/xfLsypD/495698796.jpg" alt="" className='' /></Link>
                 <h3 className='text-xl text-center'>{room_name}</h3>
+                <button className='btn'>${price}/Night</button>
                 <div className='flex items-center gap-6 absolute top-32 left-20'>
                     <Link to={`/rooms/${_id}`}><button className='btn'>View</button></Link>
                     {

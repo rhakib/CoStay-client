@@ -9,7 +9,6 @@ import Swal from 'sweetalert2';
 const MyBookings = () => {
 
     const { user } = useAuth()
-    const [booking , setBooking] = useState([])
     const axios = useAxios()
 
     const getBookings = async () => {
@@ -22,7 +21,8 @@ const MyBookings = () => {
         data: bookings,
         isLoading,
         isError,
-        error
+        error,
+        refetch
     } = useQuery({
         queryKey: ['bookings',],
         queryFn: getBookings
@@ -36,9 +36,6 @@ const MyBookings = () => {
     }
 
 
-    const handleUpdate = () => {
-
-    }
 
     const handleDelete = id => {
         Swal.fire({
@@ -48,23 +45,22 @@ const MyBookings = () => {
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, cancel it!'
+            confirmButtonText: 'Yes, please!'
         }).then((result) => {
             if (result.isConfirmed) {
                 axios.delete(`/bookings/${id}`,)
                     .then(res => {
-                        // setBooking(res.data)
-                        // console.log(res.data);
                         if (res.data.deletedCount > 0) {
                             Swal.fire(
                                 'Canceled!',
                                 'Your booking has been canceled.',
                                 'success'
                             )
-                            
+                            refetch()
+
+
                         }
-                        // const remaining = booking?.filter(booking => booking._id !== id)
-                        // setBooking(remaining)
+
                     })
             }
         })
@@ -83,7 +79,7 @@ const MyBookings = () => {
                             <tr>
                                 <th>Image</th>
                                 <th>Name</th>
-                                <th>Price</th>
+                                <th>Price/Per Night</th>
                                 <th>Date</th>
                                 <th>Update</th>
                                 <th>Cancel</th>
@@ -92,7 +88,7 @@ const MyBookings = () => {
                         <tbody>
 
                             {
-                                bookings?.data.map(booking => <BookingsRow key={booking._id} handleUpdate={handleUpdate} booking={booking} handleDelete={handleDelete}></BookingsRow>)
+                                bookings?.data.map(booking => <BookingsRow key={booking._id} booking={booking} handleDelete={handleDelete} refetch={refetch}></BookingsRow>)
 
                             }
 
