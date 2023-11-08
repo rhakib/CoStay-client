@@ -10,11 +10,11 @@ const RoomDetails = () => {
     const rooms = useLoaderData()
     const [room, setRoom] = useState(rooms)
     const [booked, setBooked] = useState({})
-    const [inputValue, setInputValue] = useState('')
-    const { _id, room_name, description, price, amenities, room_size, available_seats, image } = room;
-    const bookedDate = booked.date;
     const [seat, setSeat] = useState()
-    console.log(bookedDate);
+    const [bookingDate, setBookingDate] = useState('')
+    const { _id, roomId,  room_name, description, price, amenities, offers, room_size, available_seats, image } = room;
+    const bookedDate = booked.bookingDate;
+    const discountedPrice = (offers / 100) * price
 
 
     const axios = useAxios()
@@ -35,9 +35,9 @@ const RoomDetails = () => {
 
     const {
         data: bookings,
-        // isLoading,
-        // isError,
-        // error,
+        isLoading,
+        isError,
+        error,
         // refetch
     } = useQuery({
         queryKey: ['bookings',],
@@ -54,11 +54,13 @@ const RoomDetails = () => {
     }, [bookings?.data])
 
     const handleInputChange = (e) => {
-        setInputValue(e.target.value)
+        setBookingDate(e.target.value)
 
     }
 
-    if (bookedDate == inputValue) {
+
+
+    if (bookedDate == bookingDate) {
         Swal.fire(
             'Not available!',
             'already booked in this date, please choose another one',
@@ -68,30 +70,22 @@ const RoomDetails = () => {
 
 
 
-    const handleBooking = (e) => {
+    const handleBooking = () => {
 
-        e.preventDefault()
-
-        const form = new FormData(e.currentTarget)
-
-        const name = form.get('name');
-        const email = form.get('email');
-        const date = form.get('date');
-        console.log(date);
-
-
+       
         if (seat > 0) {
             setSeat(seat - 1)
         }
 
         const bookings = {
-            name,
-            email,
-            date,
+            // name,
+            // email,
+            bookingDate,
             available_seats: seat,
             image,
             room_name,
-            price
+            price,
+            roomId
 
 
         }
@@ -99,7 +93,15 @@ const RoomDetails = () => {
 
         axios.post('/bookings', bookings)
             .then(res => {
-                console.log(res.data);
+                if (res.data.insertedId) {
+                    Swal.fire(
+                        'Booked!!!',
+                        'Welcome to CoStay, You have booked this room.',
+                        'success'
+                    )
+
+                }
+
             })
 
         axios.put(`/rooms/${_id}`, bookings)
@@ -107,9 +109,13 @@ const RoomDetails = () => {
                 console.log(res.data);
             })
 
+    }
+    if (isLoading) {
+        return <div className='flex justify-center min-h-screen'><span className="loading loading-spinner loading-lg"></span></div>
 
-
-
+    }
+    if (isError) {
+        return <p>Something went wrong {error}</p>
     }
 
     return (
@@ -134,48 +140,61 @@ const RoomDetails = () => {
                         amenities?.map((item, idx) => <li key={idx}>{item}</li>)
                     }
                 </div>
-               
+                <p className='font-bold'>Room Size: {room_size}</p>
+
                 <div className="mt-6 flex items-center gap-4">
-                    <p className='text-xl btn font-normal capitalize'>Available Seats: {seat}</p>
-                    <span className="text-2xl font-bold ">${price}/Per Night</span>
+                    <p className={`${seat == 0 ? 'text-xl btn text-white font-semibold capitalize bg-red-500 hover:bg-red-600' : 'text-xl btn font-normal capitalize'}`}>Available Seats: {seat}</p>
+                    <span className="text-2xl font-bold ">${offers ? (price - discountedPrice) : price}/Per Night</span>
+                    {offers && seat > 0 && <span className="text-2xl text-purple-500 font-bold ">({offers}% off)</span>}
+
                 </div>
-                                
-                    <div className="hero pb-12" >
-                        <div className="hero-content flex-col">
-                            <div className="card flex-shrink-0 w-[350px] md:w-[400px]  shadow-2xl mt-6 glass  bg-purple-400">
-                                <form onSubmit={handleBooking} className="card-body">
-                                    <div className="form-control">
-                                        <label className="label">
-                                            <span className="label-text  font-semibold text-xl">Name</span>
-                                        </label>
-                                        <input type="text" name='name' placeholder="Name" className="input  input-bordered" required />
-                                    </div>
-                                    <div className="form-control">
-                                        <label className="label">
-                                            <span className="label-text   font-semibold text-xl">Email</span>
-                                        </label>
-                                        <input type="email" name='email' placeholder="Email" className="input  input-bordered" required />
-                                    </div>
-                                    <div className="form-control">
-                                        <label className="label">
-                                            <span className="label-text font-semibold text-xl">Date</span>
-                                        </label>
-                                        <input onChange={handleInputChange} type="date" name='date' placeholder="Email" className="input  input-bordered" required />
-                                    </div>
-                                    <div className="form-control mt-6">
 
-                                        {
-                                            seat == 0 || bookedDate == inputValue ? <p className="btn   text-lg  bg-base-600 ">Unavailable</p> :
-                                            <button type='submit' className="btn  text-white text-lg hover:bg-purple-700 bg-purple-600">Book Now</button>}
+                <div className="hero pb-12" >
+                    <div className="hero-content flex-col">
+                        <div className="card flex-shrink-0 w-[350px] md:w-[400px]  shadow-2xl mt-6 glass  bg-purple-400">
+                            <div className="card-body">
+                                <div className="form-control">
+                                    <label className="label">
+                                        <span className="label-text font-semibold text-xl">Choose the date</span>
+                                    </label>
+                                    <input onChange={handleInputChange} type="date" name='date' placeholder="Email" className="input  input-bordered" required />
+                                </div>
+                                <div className="form-control mt-6">
 
-                                    </div>
+                                    {
+                                        seat == 0 || bookedDate == bookingDate ? <p className="btn   text-lg  bg-base-600 ">Unavailable</p> :
+                                            <><button className="btn border-none text-white hover:bg-purple-700 bg-purple-600" onClick={() => document.getElementById('my_modal').showModal()}>Book Now</button>
+                                                <dialog id={'my_modal'} className="modal  sm:modal-middle">
+                                                    <div className="modal-box p-20 bg-gray-200">
+                                                        <h3 className="font-bold text-lg text-center">Summary of your booking</h3>
+                                                        <div className='flex flex-col ml-16 my-6'>
+                                                            <h2><span className='font-bold'>Room</span>: {room_name}</h2>
+                                                            <h2><span className='font-bold'>Date</span>: {bookingDate}</h2>
+                                                            <h2> <span className='font-bold'>Price</span>: ${price}</h2>
+
+                                                        </div>
 
 
-                                </form>
+                                                        <div className="modal-action flex flex-col items-center justify-center space-y-4">
+                                                            <form method="dialog" className='flex gap-4'>
+
+                                                                <button onClick={handleBooking} type='submit' className="btn  text-white text-lg hover:bg-purple-700 bg-purple-600">Confirm</button>
+
+                                                                <button className="btn bg-red-500 hover:bg-red-800 text-white">Cancel</button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </dialog></>}
+
+                                </div>
+
+
 
                             </div>
+
                         </div>
-                    </div>                
+                    </div>
+                </div>
             </div>
         </div>
     );

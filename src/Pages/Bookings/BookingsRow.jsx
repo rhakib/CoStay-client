@@ -4,18 +4,20 @@ import Swal from 'sweetalert2';
 
 const BookingsRow = ({ booking, handleDelete, refetch }) => {
 
-    console.log(booking);
-    const { _id, date, room_name, price, image } = booking;
+
+    const { _id, room_name, price, image, bookingDate, roomId } = booking;
 
 
-    const [cancel, setCancel] = useState()
+    const [cancel, setCancel] = useState(0)
     const [inputValue, setInputValue] = useState('')
+    const [review, setReview] = useState('')
     // const [update, setUpdate] = useState(null)
     const axios = useAxios()
     console.log(inputValue);
-    let bookedDate = new Date(date).getTime()
-    let canUpdateDate = new Date(1699401517200).getTime()
+    let bookedDate = new Date(bookingDate).getTime()
+    let canUpdateDate = 1699401517200;
     const difference = ((bookedDate - canUpdateDate) / 86400)
+    console.log(bookedDate, difference, cancel);
 
 
     useEffect(() => {
@@ -25,14 +27,21 @@ const BookingsRow = ({ booking, handleDelete, refetch }) => {
     }, [difference])
 
 
+
     const handleInputChange = (e) => {
         setInputValue(e.target.value)
 
     }
 
+    const handleReviewInput = (e) => {
+        setReview(e.target.value)
+    }
+
+    console.log(review);
+
     const handleUpdate = id => {
         console.log(id);
-        
+
         const updatedDate = {
             inputValue
         }
@@ -46,7 +55,7 @@ const BookingsRow = ({ booking, handleDelete, refetch }) => {
             confirmButtonText: 'Yes, please!'
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.patch(`/bookings/${id}`, updatedDate)
+                axios.put(`/bookings/${id}`, updatedDate)
                     .then(res => {
                         console.log(res.data);
                         if (res.data.modifiedCount > 0) {
@@ -63,9 +72,34 @@ const BookingsRow = ({ booking, handleDelete, refetch }) => {
                     })
             }
         })
-        
+
     }
 
+    const handleReview = (id) =>{
+
+        const userReview = {
+            review
+        }
+        
+        axios.put(`/bookings/${id}`, userReview )
+                    .then(res => {
+                        console.log(res.data);
+                        if (res.data.insertedId) {
+                            Swal.fire(
+                                'Added!',
+                                'Your booking has been updated.',
+                                'success'
+                            )
+                            refetch()
+
+
+                        }
+
+                    })
+
+    }
+
+  
     return (
         <tr>
 
@@ -82,10 +116,27 @@ const BookingsRow = ({ booking, handleDelete, refetch }) => {
                 {room_name}
             </td>
             <td>${price}</td>
-            <td>{date}</td>
-            <th>
+            <td>{bookingDate}</td>
+            <td><button className="btn" onClick={() => document.getElementById(roomId).showModal()}>Review</button>
+                <dialog id={roomId} className="modal  sm:modal-middle">
+                    <div className="modal-box p-20 bg-gray-200">
+                        <h3 className="font-bold text-lg text-center">Update booking</h3>
 
-           
+
+                        <div className="modal-action flex flex-col items-center justify-center space-y-4">
+                            <form onSubmit={() => handleReview(roomId)} method="dialog" className='space-y-4 gap-4'>
+                                <input rows='5' cols='50' onChange={handleReviewInput} type="text " className='p-2 rounded-lg' />
+
+                                <div className='flex justify-center gap-4'>
+                                    <button className="btn text-white bg-green-600 hover:bg-green-800">Send</button>
+
+                                    <button className="btn bg-red-500 hover:bg-red-800 text-white">Cancel</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </dialog></td>
+            <th>
                 <button className="btn" onClick={() => document.getElementById(_id).showModal()}>Update</button>
                 <dialog id={_id} className="modal  sm:modal-middle">
                     <div className="modal-box p-20 bg-gray-200">
@@ -94,7 +145,7 @@ const BookingsRow = ({ booking, handleDelete, refetch }) => {
 
                         <div className="modal-action flex flex-col items-center justify-center space-y-4">
                             <form method="dialog" className='flex gap-4'>
-                            <input onChange={handleInputChange}  type="date" className='p-2 rounded-lg' />
+                                <input onChange={handleInputChange} type="date" className='p-2 rounded-lg' />
 
                                 <button onClick={() => handleUpdate(_id)} className="btn text-white bg-green-600 hover:bg-green-800">Update</button>
 
@@ -107,9 +158,7 @@ const BookingsRow = ({ booking, handleDelete, refetch }) => {
             <th>
                 {
                     cancel < 1 ? <p className='btn'>confirmed</p> :
-                        <button onClick={() => handleDelete(_id)} className="btn btn-square">
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" /></svg>
-                        </button>
+                        <button onClick={() => handleDelete(_id)} className="btn">Cancel </button>
                 }
             </th>
         </tr>
