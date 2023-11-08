@@ -1,15 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useLoaderData, useParams } from 'react-router-dom';
 import useAxios from '../../Hooks/useAxios';
+import { useQuery } from '@tanstack/react-query';
+import Swal from 'sweetalert2';
 
 const RoomDetails = () => {
 
     const { id } = useParams()
     const rooms = useLoaderData()
     const [room, setRoom] = useState(rooms)
+    const [booked, setBooked] = useState({})
+    const [inputValue, setInputValue] = useState('')
     const { _id, room_name, description, price, amenities, room_size, available_seats, image } = room;
+    const bookedDate = booked.date;
     const [seat, setSeat] = useState()
-    console.log(seat);
+    console.log(bookedDate);
+
 
     const axios = useAxios()
 
@@ -18,7 +24,47 @@ const RoomDetails = () => {
         setRoom(filteredData)
         setSeat(available_seats)
 
-    }, [rooms, id, available_seats])
+    }, [rooms, id, available_seats,])
+
+
+    const getBookings = async () => {
+        const res = await axios.get(`/bookings`)
+        return res;
+
+    }
+
+    const {
+        data: bookings,
+        // isLoading,
+        // isError,
+        // error,
+        // refetch
+    } = useQuery({
+        queryKey: ['bookings',],
+        queryFn: getBookings
+    })
+    console.log(bookings?.data);
+
+
+    useEffect(() => {
+
+        bookings?.data.map(booking => setBooked(booking))
+
+
+    }, [bookings?.data])
+
+    const handleInputChange = (e) => {
+        setInputValue(e.target.value)
+
+    }
+
+    if (bookedDate == inputValue) {
+        Swal.fire(
+            'Not available!',
+            'already booked in this date, please choose another one',
+            'error'
+        )
+    }
 
 
 
@@ -31,6 +77,7 @@ const RoomDetails = () => {
         const name = form.get('name');
         const email = form.get('email');
         const date = form.get('date');
+        console.log(date);
 
 
         if (seat > 0) {
@@ -87,47 +134,48 @@ const RoomDetails = () => {
                         amenities?.map((item, idx) => <li key={idx}>{item}</li>)
                     }
                 </div>
+               
                 <div className="mt-6 flex items-center gap-4">
                     <p className='text-xl btn font-normal capitalize'>Available Seats: {seat}</p>
                     <span className="text-2xl font-bold ">${price}/Per Night</span>
                 </div>
-                {
-                    seat == 0 ? <h2 className='text-2xl py-20 font-semibold text-center'>This room is currently unavailable, you can visit <Link to='/rooms'><span className='text-purple-700'>Explore rooms</span></Link> to book other rooms</h2> : <div className="hero pb-12" >
-                    <div className="hero-content flex-col">
-                        <div className="card flex-shrink-0 w-[350px] md:w-[400px]  shadow-2xl mt-6 glass  bg-purple-400">
-                            <form onSubmit={handleBooking} className="card-body">
-                                <div className="form-control">
-                                    <label className="label">
-                                        <span className="label-text  font-semibold text-xl">Name</span>
-                                    </label>
-                                    <input type="text" name='name' placeholder="Name" className="input  input-bordered" required/>
-                                </div>
-                                <div className="form-control">
-                                    <label className="label">
-                                        <span className="label-text   font-semibold text-xl">Email</span>
-                                    </label>
-                                    <input type="email" name='email' placeholder="Email" className="input  input-bordered" required/>
-                                </div>
-                                <div className="form-control">
-                                    <label className="label">
-                                        <span className="label-text font-semibold text-xl">Date</span>
-                                    </label>
-                                    <input type="date" name='date' placeholder="Email" className="input  input-bordered" required/>
-                                </div>
-                                <div className="form-control mt-6">
-                                    
-                                         <button type='submit' className="btn  text-white text-lg hover:bg-purple-700 bg-purple-600">Book Now</button>
-                                    
-                                </div>
+                                
+                    <div className="hero pb-12" >
+                        <div className="hero-content flex-col">
+                            <div className="card flex-shrink-0 w-[350px] md:w-[400px]  shadow-2xl mt-6 glass  bg-purple-400">
+                                <form onSubmit={handleBooking} className="card-body">
+                                    <div className="form-control">
+                                        <label className="label">
+                                            <span className="label-text  font-semibold text-xl">Name</span>
+                                        </label>
+                                        <input type="text" name='name' placeholder="Name" className="input  input-bordered" required />
+                                    </div>
+                                    <div className="form-control">
+                                        <label className="label">
+                                            <span className="label-text   font-semibold text-xl">Email</span>
+                                        </label>
+                                        <input type="email" name='email' placeholder="Email" className="input  input-bordered" required />
+                                    </div>
+                                    <div className="form-control">
+                                        <label className="label">
+                                            <span className="label-text font-semibold text-xl">Date</span>
+                                        </label>
+                                        <input onChange={handleInputChange} type="date" name='date' placeholder="Email" className="input  input-bordered" required />
+                                    </div>
+                                    <div className="form-control mt-6">
+
+                                        {
+                                            seat == 0 || bookedDate == inputValue ? <p className="btn   text-lg  bg-base-600 ">Unavailable</p> :
+                                            <button type='submit' className="btn  text-white text-lg hover:bg-purple-700 bg-purple-600">Book Now</button>}
+
+                                    </div>
 
 
-                            </form>
+                                </form>
 
+                            </div>
                         </div>
-                    </div>
-                </div>
-                }
-
+                    </div>                
             </div>
         </div>
     );
