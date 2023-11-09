@@ -11,20 +11,32 @@ const BookingsRow = ({ booking, handleDelete, refetch }) => {
     const [cancel, setCancel] = useState(0)
     const [inputValue, setInputValue] = useState('')
     const [review, setReview] = useState('')
-    // const [update, setUpdate] = useState(null)
-    const axios = useAxios()
-    console.log(inputValue);
-    let bookedDate = new Date(bookingDate).getTime()
-    let canUpdateDate = 1699401517200;
-    const difference = ((bookedDate - canUpdateDate) / 86400)
-    console.log(bookedDate, difference, cancel);
 
+    const axios = useAxios()
+
+
+
+
+    const currentDate = new Date();
+    const currentYear = currentDate.getFullYear();
+    const currentMonth = currentDate.getMonth() + 1; // Months are zero-based, so add 1
+    const currentDay = currentDate.getDate();
+
+    const current = `${currentMonth}-${currentDay}-${currentYear}`;
+
+    // const dateStr1 = inputValue;
+    const dateStr2 = bookingDate;
+
+    const date1 = new Date(current);
+    const date2 = new Date(dateStr2);
+
+    const dayDifference = Math.floor((date2 - date1) / (1000 * 60 * 60 * 24));
 
     useEffect(() => {
 
-        setCancel(difference)
+        setCancel(dayDifference)
 
-    }, [difference])
+    }, [dayDifference])
 
 
 
@@ -37,13 +49,13 @@ const BookingsRow = ({ booking, handleDelete, refetch }) => {
         setReview(e.target.value)
     }
 
-    console.log(review);
+    console.log(inputValue);
 
     const handleUpdate = id => {
         console.log(id);
 
         const updatedDate = {
-            inputValue
+            inputValue,
         }
         Swal.fire({
             title: 'Are you sure you want to update?',
@@ -75,31 +87,32 @@ const BookingsRow = ({ booking, handleDelete, refetch }) => {
 
     }
 
-    const handleReview = (id) =>{
+
+
+    const handleReview = () => {
 
         const userReview = {
-            review
+            review,
+            roomId
         }
-        
-        axios.put(`/bookings/${id}`, userReview )
-                    .then(res => {
-                        console.log(res.data);
-                        if (res.data.insertedId) {
-                            Swal.fire(
-                                'Added!',
-                                'Your booking has been updated.',
-                                'success'
-                            )
-                            refetch()
 
+        axios.post('/review', userReview)
+            .then(res => {
+                console.log(res.data);
+                if (res.data.insertedId) {
+                    Swal.fire(
+                        'Review sent!',
+                        'Thanks for sharing your experience with us.',
+                        'success'
+                    )
 
-                        }
+                }
 
-                    })
+            })
 
     }
 
-  
+
     return (
         <tr>
 
@@ -120,15 +133,23 @@ const BookingsRow = ({ booking, handleDelete, refetch }) => {
             <td><button className="btn" onClick={() => document.getElementById(roomId).showModal()}>Review</button>
                 <dialog id={roomId} className="modal  sm:modal-middle">
                     <div className="modal-box p-20 bg-gray-200">
-                        <h3 className="font-bold text-lg text-center">Update booking</h3>
+                        <h3 className="font-bold text-lg text-center">Send Review</h3>
 
 
                         <div className="modal-action flex flex-col items-center justify-center space-y-4">
-                            <form onSubmit={() => handleReview(roomId)} method="dialog" className='space-y-4 gap-4'>
-                                <input rows='5' cols='50' onChange={handleReviewInput} type="text " className='p-2 rounded-lg' />
+                            <form method="dialog" className='space-y-4 gap-4'>
+                                <textarea rows='5' cols='50' onChange={handleReviewInput} type="text " className='p-2 rounded-lg' />
+                                <p className='font-semibold'>How much you enjoyed?</p>
+                                <select className='bg-gray-300 py-1 px-2 rounded-md font-semibold' name="" id="">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                </select>
 
                                 <div className='flex justify-center gap-4'>
-                                    <button className="btn text-white bg-green-600 hover:bg-green-800">Send</button>
+                                    <button onClick={handleReview} className="btn text-white bg-green-600 hover:bg-green-800">Send</button>
 
                                     <button className="btn bg-red-500 hover:bg-red-800 text-white">Cancel</button>
                                 </div>
@@ -157,7 +178,7 @@ const BookingsRow = ({ booking, handleDelete, refetch }) => {
             </th>
             <th>
                 {
-                    cancel < 1 ? <p className='btn'>confirmed</p> :
+                    cancel <= 1 ? <p className='btn'>confirmed</p> :
                         <button onClick={() => handleDelete(_id)} className="btn">Cancel </button>
                 }
             </th>

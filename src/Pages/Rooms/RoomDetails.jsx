@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Link, useLoaderData, useParams } from 'react-router-dom';
+import  { useEffect, useState } from 'react';
+import {  useLoaderData, useParams } from 'react-router-dom';
 import useAxios from '../../Hooks/useAxios';
 import { useQuery } from '@tanstack/react-query';
 import Swal from 'sweetalert2';
@@ -9,12 +9,17 @@ const RoomDetails = () => {
     const { id } = useParams()
     const rooms = useLoaderData()
     const [room, setRoom] = useState(rooms)
-    const [booked, setBooked] = useState({})
+    // const [booked, setBooked] = useState({})
     const [seat, setSeat] = useState()
     const [bookingDate, setBookingDate] = useState('')
-    const { _id, roomId,  room_name, description, price, amenities, offers, room_size, available_seats, image } = room;
-    const bookedDate = booked.bookingDate;
+    const [filteredDate, setFilteredDate] = useState([])
+    const [bookedDate, setBookedDate] = useState({})
+    const [review, setReview] = useState([])
+    const { _id, roomId, room_name, description, price, amenities, offers, room_size, available_seats, image } = room;
+    const newBookedDate = bookedDate.bookingDate
+ 
     const discountedPrice = (offers / 100) * price
+  
 
 
     const axios = useAxios()
@@ -43,15 +48,43 @@ const RoomDetails = () => {
         queryKey: ['bookings',],
         queryFn: getBookings
     })
-    console.log(bookings?.data);
+    // console.log(bookings?.data);
 
 
     useEffect(() => {
 
-        bookings?.data.map(booking => setBooked(booking))
+        filteredDate?.map(booking => setBookedDate(booking))
+        
 
 
-    }, [bookings?.data])
+    }, [filteredDate])
+
+    const getReview = async () => {
+        const res = await axios.get(`/review`)
+        return res;
+
+    }
+
+    const {
+        data: reviews,
+
+    } = useQuery({
+        queryKey: ['reviews',],
+        queryFn: getReview
+    })
+    console.log(reviews?.data);
+
+    useEffect(()=>{
+        const filteredReview = reviews?.data.filter(rev => rev.roomId == roomId)
+        setReview(filteredReview);
+
+        const filterDate = bookings?.data.filter(room => room.roomId == roomId )
+        setFilteredDate(filterDate)
+    }, 
+    [reviews?.data, roomId, bookings?.data, _id ])
+    
+    console.log(newBookedDate);
+
 
     const handleInputChange = (e) => {
         setBookingDate(e.target.value)
@@ -60,7 +93,7 @@ const RoomDetails = () => {
 
 
 
-    if (bookedDate == bookingDate) {
+    if (newBookedDate == bookingDate) {
         Swal.fire(
             'Not available!',
             'already booked in this date, please choose another one',
@@ -72,7 +105,7 @@ const RoomDetails = () => {
 
     const handleBooking = () => {
 
-       
+
         if (seat > 0) {
             setSeat(seat - 1)
         }
@@ -89,7 +122,7 @@ const RoomDetails = () => {
 
 
         }
-        console.log(bookings);
+        // console.log(bookings);
 
         axios.post('/bookings', bookings)
             .then(res => {
@@ -162,7 +195,7 @@ const RoomDetails = () => {
                                 <div className="form-control mt-6">
 
                                     {
-                                        seat == 0 || bookedDate == bookingDate ? <p className="btn   text-lg  bg-base-600 ">Unavailable</p> :
+                                        seat == 0 || bookingDate == newBookedDate ? <p className="btn   text-lg  bg-base-600 ">Unavailable</p> :
                                             <><button className="btn border-none text-white hover:bg-purple-700 bg-purple-600" onClick={() => document.getElementById('my_modal').showModal()}>Book Now</button>
                                                 <dialog id={'my_modal'} className="modal  sm:modal-middle">
                                                     <div className="modal-box p-20 bg-gray-200">
