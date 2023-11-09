@@ -127,7 +127,7 @@ const BookingsRow = ({ booking, handleDelete, refetch }) => {
                 <div className="flex items-center space-x-3">
                     <div className="avatar">
                         <div className=" w-40 h-32">
-                            <img src="https://i.ibb.co/xfLsypD/495698796.jpg" alt="Avatar Tailwind CSS Component" />
+                            <img src="https://cf2.bstatic.com/xdata/images/hotel/max1024x768/487273308.jpg?k=74888cd4b506917e45ad6f4ca5059305737596e277b1d37d73a8529c121df2ba&o=&hp=1" alt="Avatar Tailwind CSS Component" />
                         </div>
                     </div>
                 </div>
@@ -147,16 +147,16 @@ const BookingsRow = ({ booking, handleDelete, refetch }) => {
                             <form method="dialog" className='space-y-4 gap-4'>
                                 <textarea rows='5' cols='50' onChange={handleReviewInput} type="text " className='p-2 rounded-lg' />
                                 <p className='font-semibold'>How much you enjoyed?</p>
-                                <select defaultChecked onChange={handleStars} className='bg-gray-300 py-1 px-2 rounded-md font-semibold' name="" id="">
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
+                                <select onChange={handleStars} className='bg-gray-300 py-1 px-2 rounded-md font-semibold' name="" id="">
+                                    <option value="1" >1</option>
+                                    <option value="2"defaultChecked>2</option>
                                     <option value="3">3</option>
                                     <option value="4">4</option>
                                     <option value="5">5</option>
                                 </select>
 
                                 <div className='flex justify-center gap-4'>
-                                    <button onClick={handleReview} className="btn text-white bg-green-600 hover:bg-green-800">Send</button>
+                                    <button onClick={handleReview} className="btn text-white bg-gray-600 hover:bg-gray-800">Send</button>
 
                                     <button className="btn bg-red-500 hover:bg-red-800 text-white">Cancel</button>
                                 </div>
@@ -175,7 +175,7 @@ const BookingsRow = ({ booking, handleDelete, refetch }) => {
                             <form method="dialog" className='flex gap-4'>
                                 <input onChange={handleInputChange} type="date" className='p-2 rounded-lg' />
 
-                                <button onClick={() => handleUpdate(_id)} className="btn text-white bg-green-600 hover:bg-green-800">Update</button>
+                                <button onClick={() => handleUpdate(_id)} className="btn text-white bg-gray-600 hover:bg-gray-800">Update</button>
 
                                 <button className="btn bg-red-500 hover:bg-red-800 text-white">Cancel</button>
                             </form>
