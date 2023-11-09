@@ -3,6 +3,7 @@ import {  useLoaderData, useParams } from 'react-router-dom';
 import useAxios from '../../Hooks/useAxios';
 import { useQuery } from '@tanstack/react-query';
 import Swal from 'sweetalert2';
+import Review from '../Bookings/Review';
 
 const RoomDetails = () => {
 
@@ -15,6 +16,7 @@ const RoomDetails = () => {
     const [filteredDate, setFilteredDate] = useState([])
     const [bookedDate, setBookedDate] = useState({})
     const [review, setReview] = useState([])
+    // const [reviewCount, setReviewCount] = useState()
     const { _id, roomId, room_name, description, price, amenities, offers, room_size, available_seats, image } = room;
     const newBookedDate = bookedDate.bookingDate
  
@@ -54,10 +56,12 @@ const RoomDetails = () => {
     useEffect(() => {
 
         filteredDate?.map(booking => setBookedDate(booking))
+        // review?.map(rating => setReviewCount(rating))
+
         
 
 
-    }, [filteredDate])
+    }, [filteredDate, review])
 
     const getReview = async () => {
         const res = await axios.get(`/review`)
@@ -83,7 +87,7 @@ const RoomDetails = () => {
     }, 
     [reviews?.data, roomId, bookings?.data, _id ])
     
-    console.log(newBookedDate);
+    // console.log(reviewCount);
 
 
     const handleInputChange = (e) => {
@@ -151,6 +155,11 @@ const RoomDetails = () => {
         return <p>Something went wrong {error}</p>
     }
 
+
+    // review based onn stars
+
+    
+
     return (
         <div className=" mt-8 border max-w-7xl mx-auto border-gray-200 rounded-lg  grid md:grid-cols-2 gap-16">
 
@@ -160,6 +169,11 @@ const RoomDetails = () => {
                     <img src="https://i.ibb.co/xfLsypD/495698796.jpg" alt="" className='p-4 transition hover:scale-150' />
                     <img src="https://i.ibb.co/xfLsypD/495698796.jpg" alt="" className='p-4 transition hover:scale-150' />
                     <img src="https://i.ibb.co/xfLsypD/495698796.jpg" alt="" className='p-4 transition hover:scale-150' />
+                </div>
+                <div className='grid grid-cols-2 gap-4 mt-4 p-6'>
+                    {
+                        review?.map(rating => <Review key={rating._id} rating={rating}></Review>)
+                    }
                 </div>
             </div>
 
@@ -181,6 +195,7 @@ const RoomDetails = () => {
                     {offers && seat > 0 && <span className="text-2xl text-purple-500 font-bold ">({offers}% off)</span>}
 
                 </div>
+               
 
                 <div className="hero pb-12" >
                     <div className="hero-content flex-col">

@@ -11,6 +11,7 @@ const BookingsRow = ({ booking, handleDelete, refetch }) => {
     const [cancel, setCancel] = useState(0)
     const [inputValue, setInputValue] = useState('')
     const [review, setReview] = useState('')
+    const [stars, setStars] = useState([])
 
     const axios = useAxios()
 
@@ -18,6 +19,7 @@ const BookingsRow = ({ booking, handleDelete, refetch }) => {
 
 
     const currentDate = new Date();
+    console.log(currentDate);
     const currentYear = currentDate.getFullYear();
     const currentMonth = currentDate.getMonth() + 1; // Months are zero-based, so add 1
     const currentDay = currentDate.getDate();
@@ -47,6 +49,9 @@ const BookingsRow = ({ booking, handleDelete, refetch }) => {
 
     const handleReviewInput = (e) => {
         setReview(e.target.value)
+    }
+    const handleStars = (e) => {
+        setStars(e.target.value)
     }
 
     console.log(inputValue);
@@ -93,7 +98,9 @@ const BookingsRow = ({ booking, handleDelete, refetch }) => {
 
         const userReview = {
             review,
-            roomId
+            roomId,
+            stars: [stars],
+            currentDate
         }
 
         axios.post('/review', userReview)
@@ -140,7 +147,7 @@ const BookingsRow = ({ booking, handleDelete, refetch }) => {
                             <form method="dialog" className='space-y-4 gap-4'>
                                 <textarea rows='5' cols='50' onChange={handleReviewInput} type="text " className='p-2 rounded-lg' />
                                 <p className='font-semibold'>How much you enjoyed?</p>
-                                <select className='bg-gray-300 py-1 px-2 rounded-md font-semibold' name="" id="">
+                                <select onChange={handleStars} className='bg-gray-300 py-1 px-2 rounded-md font-semibold' name="" id="">
                                     <option value="1">1</option>
                                     <option value="2">2</option>
                                     <option value="3">3</option>
