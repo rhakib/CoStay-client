@@ -177,7 +177,7 @@ const RoomDetails = () => {
                 </div>
             </div>
 
-            <div className="flex flex-col p-4 md:p-1 justify-center space-y-3">
+            <div className="flex flex-col p-4 md:p-1 mt-6 space-y-3">
 
                 <h5 className="text-5xl font-semibold tracking-tight  ">{room_name}</h5>
                 <h5 className="tracking-tight text-gray-900 dark:text-white"></h5>
@@ -190,7 +190,7 @@ const RoomDetails = () => {
                 <p className='font-bold'>Room Size: {room_size}</p>
 
                 <div className="mt-6 flex items-center gap-4">
-                    <p className={`${seat == 0 ? 'text-xl btn text-white font-semibold capitalize bg-red-500 hover:bg-red-600' : 'text-xl btn font-normal capitalize'}`}>Available Seats: {seat}</p>
+                    <p className={`${seat == 0 ? 'text-xl btn text-white font-semibold capitalize bg-gray-400 hover:bg-red-600' : 'text-xl btn font-normal capitalize'}`}>Available Seats: {seat}</p>
                     <span className="text-2xl font-bold ">${offers ? (price - discountedPrice) : price}/Per Night</span>
                     {offers && seat > 0 && <span className="text-2xl text-purple-500 font-bold ">({offers}% off)</span>}
 
@@ -199,7 +199,7 @@ const RoomDetails = () => {
 
                 <div className="hero pb-12" >
                     <div className="hero-content flex-col">
-                        <div className="card flex-shrink-0 w-[350px] md:w-[400px]  shadow-2xl mt-6 glass  bg-purple-400">
+                        <div className="card flex-shrink-0 w-[350px] md:w-[400px]  shadow-2xl mt-6 glass  bg-gray-400">
                             <div className="card-body">
                                 <div className="form-control">
                                     <label className="label">

@@ -147,7 +147,7 @@ const BookingsRow = ({ booking, handleDelete, refetch }) => {
                             <form method="dialog" className='space-y-4 gap-4'>
                                 <textarea rows='5' cols='50' onChange={handleReviewInput} type="text " className='p-2 rounded-lg' />
                                 <p className='font-semibold'>How much you enjoyed?</p>
-                                <select onChange={handleStars} className='bg-gray-300 py-1 px-2 rounded-md font-semibold' name="" id="">
+                                <select defaultChecked onChange={handleStars} className='bg-gray-300 py-1 px-2 rounded-md font-semibold' name="" id="">
                                     <option value="1">1</option>
                                     <option value="2">2</option>
                                     <option value="3">3</option>

@@ -81,6 +81,7 @@ const MyBookings = () => {
                                 <th>Name</th>
                                 <th>Price/Per Night</th>
                                 <th>Date</th>
+                                <th>Review</th>
                                 <th>Update</th>
                                 <th>Cancel</th>
                             </tr>
