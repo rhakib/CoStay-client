@@ -8,7 +8,7 @@ const BookingsRow = ({ booking, handleDelete, refetch }) => {
     
 
 
-    const { _id, room_name, price, image, bookingDate, roomId } = booking;
+    const { _id, room_name, price, img1, bookingDate, roomId } = booking;
 
     const {user} = useAuth()
 
@@ -137,7 +137,7 @@ const BookingsRow = ({ booking, handleDelete, refetch }) => {
                 <div className="flex items-center space-x-3">
                     <div className="avatar">
                         <div className=" w-40 h-32">
-                            <img src="https://cf2.bstatic.com/xdata/images/hotel/max1024x768/487273308.jpg?k=74888cd4b506917e45ad6f4ca5059305737596e277b1d37d73a8529c121df2ba&o=&hp=1" alt="Avatar Tailwind CSS Component" />
+                            <img src={img1} alt="Avatar Tailwind CSS Component" />
                         </div>
                     </div>
                 </div>
@@ -156,7 +156,7 @@ const BookingsRow = ({ booking, handleDelete, refetch }) => {
                         <div className="modal-action flex flex-col items-center justify-center space-y-4">
                             <form method="dialog" className='space-y-4 gap-4'>
                                 <textarea rows='5' cols='50' onChange={handleReviewInput} type="text " className='p-2 rounded-lg' />
-                                <p className='font-semibold'>How much you enjoyed?</p>
+                                <p className='font-semibold'>How much you rate us?</p>
                                 <select defaultValue={5} onChange={handleStars} className='bg-gray-300 py-1 px-2 rounded-md font-semibold' name="" id="">
                                     <option value="1" >1</option>
                                     <option value="2">2</option>

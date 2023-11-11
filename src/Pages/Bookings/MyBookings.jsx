@@ -71,7 +71,8 @@ const MyBookings = () => {
 
     return (
         <div className='max-w-[1200px] mx-auto w-full'>
-            <h2 className='text-center text-3xl my-4'>Your Total Bookings: {bookings?.data.length}</h2>
+            <h2 className='text-center text-3xl my-8'>Your Bookings</h2>
+            <hr />
             {
                 bookings?.data.length > 0 ? <div className="overflow-x-auto mt-4">
                     <table className="table">

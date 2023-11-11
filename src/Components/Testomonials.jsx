@@ -8,9 +8,9 @@ const Testomonials = () => {
   const AutoplaySlider = withAutoplay(AwesomeSlider);
 
   return (
-    <div>
+    <div id='testomonials'>
       <h2 className='text-center text-5xl font-semibold mt-6'>Testomonials</h2>
-      <hr className='w-1/4 mx-auto bg-gray-400 mt-5 mb-10 p-[2px]'/>
+      <hr className='w-32 mx-auto bg-gray-400 mt-5 mb-10 p-[2px]'/>
       <AutoplaySlider className='h-[800px] md:h-[600px]'
         play={true}
         cancelOnInteraction={false} // should stop playing on user interaction

@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import useAxios from '../../Hooks/useAxios';
 import { useQuery } from '@tanstack/react-query';
 import Container from '../../Container/Container';
 import RoomsCard from './RoomsCard';
-import { useLoaderData, useParams } from 'react-router-dom';
+
 
 const Rooms = () => {
    
@@ -20,8 +20,7 @@ const Rooms = () => {
     const {
         data: rooms,
         isLoading,
-        isError,
-        error
+       
     } = useQuery({
         queryKey: ['rooms', price],
         queryFn: getRooms
@@ -47,7 +46,7 @@ const Rooms = () => {
                                 <option value='asc'>Low to High</option>
                                 <option value='desc'>High to Low</option>
                             </select>
-            <div className='grid md:grid-cols-3 gap-5'>
+            <div className='grid md:grid-cols-3 gap-5 p-3'>
                 {
                     rooms?.data.map(room => <RoomsCard rooms={rooms} key={room._id} room={room}></RoomsCard>)
 

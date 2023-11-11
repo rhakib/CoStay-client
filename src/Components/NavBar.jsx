@@ -19,9 +19,10 @@ const NavBar = () => {
     return (
         <div className="flex items-center gap-2">
             <div>
-                <NavLink to='/' className={({ isActive }) => isActive ? 'btn btn-primary btn-sm' : 'btn btn-ghost btn-sm'}>Home</NavLink>
-                <NavLink to='/rooms' className={({ isActive }) => isActive ? 'btn btn-primary btn-sm' : 'btn btn-ghost btn-sm'}>Rooms</NavLink>
-                <NavLink to='/bookings' className={({ isActive }) => isActive ? 'btn btn-primary btn-sm' : 'btn btn-ghost btn-sm'}>My Bookings</NavLink>
+                <NavLink to='/' className={({ isActive }) => isActive ? 'btn bg-slate-400 hover:bg-slate-500  btn-sm' : 'btn btn-ghost btn-sm'}>Home</NavLink>
+                <NavLink to='/rooms' className={({ isActive }) => isActive ? 'btn bg-slate-400 hover:bg-slate-500  btn-sm' : 'btn btn-ghost btn-sm'}>Rooms</NavLink>
+                <NavLink to='/bookings' className={({ isActive }) => isActive ? 'btn bg-slate-400 hover:bg-slate-500  btn-sm' : 'btn btn-ghost btn-sm'}>My Bookings</NavLink>
+                <NavLink to='/about' className={({ isActive }) => isActive ? 'btn bg-slate-400 hover:bg-slate-500  btn-sm' : 'btn btn-ghost btn-sm'}>About Us</NavLink>
             </div>
             {
                 user?.email ?
@@ -35,7 +36,7 @@ const NavBar = () => {
                                 </div>
                             </div>
                         </div>
-                    </div> : <NavLink to='/login' className={({ isActive }) => isActive ? 'btn btn-primary btn-sm' : 'btn btn-ghost btn-sm'}>Login</NavLink>}
+                    </div> : <NavLink to='/login' className={({ isActive }) => isActive ? 'btn bg-slate-400 hover:bg-slate-500  btn-sm' : 'btn btn-ghost btn-sm'}>Login</NavLink>}
 
 
         </div>

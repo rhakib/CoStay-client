@@ -1,21 +1,26 @@
 import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import  { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import useAxios from '../../Hooks/useAxios';
 
 const RoomsCard = ({ room }) => {
-    const { roomId, _id, room_name, description, price, amenities, available_seats, image } = room;
+    const { roomId, _id, room_name,  price, available_seats, img1, } = room;
     const [review, setReview] = useState([])
     const [reviewData, setReviewData] = useState({})
     const axios = useAxios()
     const { stars } = reviewData;
+
+  
 
     const getReview = async () => {
         const res = await axios.get(`/review`)
         return res;
 
     }
+
+
+
+    
 
     const {
         data: reviews,
@@ -46,10 +51,10 @@ const RoomsCard = ({ room }) => {
     console.log(stars);
 
     return (
-        <div>
-            <div className='relative'>
-                <Link to={`/rooms/${_id}`}><img src="https://cf2.bstatic.com/xdata/images/hotel/max1024x768/487273308.jpg?k=74888cd4b506917e45ad6f4ca5059305737596e277b1d37d73a8529c121df2ba&o=&hp=1" alt="" className='rounded-md' /></Link>
-                <div className='flex p-4 justify-between'>
+        <div >
+            <div data-aos="zoom-in-right"  data-aos-duration="3000"  className='relative'>
+                <Link to={`/rooms/${_id}`}><img  alt="" src={img1} className='rounded-t-md w-[402px] h-[250px] lg:h-[300px] ' /></Link>
+                <div className='flex p-4 justify-between h-20 rounded-b-lg bg-gray-200'>
                     <h3 className='text-xl text-center font-semibold'>{room_name}</h3>
                     <div className='space-y-1'>
                         <p className='font-semibold'>${price}/Night</p>
@@ -61,7 +66,7 @@ const RoomsCard = ({ room }) => {
                         }
                     </div>
                 </div>
-                <div className='flex items-center gap-6 absolute top-32 left-20'>
+                <div className='flex items-center md:gap-1 gap-4 lg:gap-6 absolute top-32 left-24 md:left-10 lg:left-20'>
                     <Link to={`/rooms/${_id}`}><button className='btn'>View</button></Link>
                     {
                         available_seats == 0 ? <h2 className='btn bg-black border-none hover:text-black opacity-70 text-white'>Unavailable</h2> : <Link to={`/rooms/${_id}`}><button className='btn bg-black hover:text-black border-none opacity-70 text-white'>Book Now</button></Link>
