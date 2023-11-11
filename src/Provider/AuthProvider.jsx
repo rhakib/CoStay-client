@@ -2,7 +2,7 @@ import { auth } from '../firebase/firebase.config';
 import { createContext, useEffect, useState } from 'react';
 import { GoogleAuthProvider, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from 'firebase/auth';
 import useAxios from '../Hooks/useAxios';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 
 export const AuthContext = createContext(null)
 const googleProvider = new GoogleAuthProvider()
@@ -12,7 +12,7 @@ const AuthProvider = ({ children }) => {
     const [user, setUser] = useState({})
     const [loading, setLoading] = useState(true)
     const axios = useAxios()
-    const navigate = useNavigate()
+  
 
     const googleSignIn = () => {
         setLoading(true)
@@ -60,13 +60,9 @@ const AuthProvider = ({ children }) => {
             else {
                 axios.post('/logout', loggedUser, {
                     withCredentials: true
-
                 })
                     .then(res => {
                         console.log(res.data);
-                    if(res.data.success == true) {
-                        navigate('/login')
-                    }
                         
                     })
 
@@ -76,7 +72,7 @@ const AuthProvider = ({ children }) => {
         return () => {
             unSubscribe()
         }
-    }, [])
+    }, [axios, user?.email])
 
     // useEffect(() => {
     //     const unSubscribe = onAuthStateChanged(auth, (currentUser => {

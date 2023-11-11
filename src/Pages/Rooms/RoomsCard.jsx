@@ -53,17 +53,12 @@ const RoomsCard = ({ room }) => {
                     <h3 className='text-xl text-center font-semibold'>{room_name}</h3>
                     <div className='space-y-1'>
                         <p className='font-semibold'>${price}/Night</p>
-                        <div className='flex items-center'>
-                            {
-                                stars?.map((review, index) => (
-                                    <div key={index}>
-                                        <p className='font-semibold flex items-center gap-1'>Rating: {Array.from({ length: (review) }, (_, i) => <span className='text-orange-500 text-xl' key={i}>&#9733;</span>)}</p>
-
-
-                                    </div>
-                                ))}
-                            <p>{review?.length > 0 && <p>({review?.length})</p>}</p>
-                        </div>
+                        {
+                            stars > 0 && <div className='flex items-center'>
+                            <p className='font-semibold flex items-center gap-1'>Rating: <span className='text-orange-500 text-xl'>&#9733;</span></p>
+                                <p>{review?.length > 0 && <p>({review?.length})</p>}</p>
+                            </div>
+                        }
                     </div>
                 </div>
                 <div className='flex items-center gap-6 absolute top-32 left-20'>

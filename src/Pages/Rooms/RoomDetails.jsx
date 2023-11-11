@@ -1,40 +1,54 @@
 import { useEffect, useState } from 'react';
-import { useLoaderData, useParams } from 'react-router-dom';
+import { NavLink, useParams } from 'react-router-dom';
 import useAxios from '../../Hooks/useAxios';
 import { useQuery } from '@tanstack/react-query';
 import Swal from 'sweetalert2';
 import Review from '../Bookings/Review';
+import useAuth from '../../Hooks/useAuth';
 
 
 const RoomDetails = () => {
-    
-    
+
+
     const { id } = useParams()
-    const rooms = useLoaderData()
-    const [room, setRoom] = useState(rooms)
-    // const [booked, setBooked] = useState({})
-    const [seat, setSeat] = useState()
+    const [rooms, setRooms] = useState(null)
+    const {user} = useAuth()
+    const email = user?.email
+   
+
+   
+
     const [bookingDate, setBookingDate] = useState('')
     const [filteredDate, setFilteredDate] = useState([])
     const [bookedDate, setBookedDate] = useState({})
     const [review, setReview] = useState([])
-    const { _id, roomId, room_name, description, price, amenities, offers, room_size, available_seats, image } = room;
-    const newBookedDate = bookedDate.bookingDate
-
-    const discountedPrice = (offers / 100) * price
+    const [seat, setSeat] = useState()
 
 
 
     const axios = useAxios()
 
+    
+    const { _id, roomId, room_name, description, price, amenities, offers, room_size, available_seats, image } = rooms || '';
+    const newBookedDate = bookedDate.bookingDate
+    
+    const discountedPrice = (offers / 100) * price
+    
+    
     useEffect(() => {
-        const filteredData = rooms?.find((item) => item._id == id);
-        setRoom(filteredData)
-        setSeat(available_seats)
 
-    }, [rooms, id, available_seats,])
+        fetch(`http://localhost:5000/rooms/${id}`)
+            .then(res => res.json())
+            .then(data => {
+                setRooms(data)
+            })
 
 
+    }, [id])
+
+    console.log(rooms);
+    
+    
     const getBookings = async () => {
         const res = await axios.get(`/bookings`)
         return res;
@@ -48,7 +62,7 @@ const RoomDetails = () => {
         error,
         // refetch
     } = useQuery({
-        queryKey: ['bookings',],
+        queryKey: ['bookings'],
         queryFn: getBookings
     })
     // console.log(bookings?.data);
@@ -57,8 +71,9 @@ const RoomDetails = () => {
     useEffect(() => {
 
         filteredDate?.map(booking => setBookedDate(booking))
+        setSeat(available_seats)
 
-    }, [filteredDate])
+    }, [filteredDate, available_seats])
 
     const getReview = async () => {
         const res = await axios.get(`/review`)
@@ -76,15 +91,16 @@ const RoomDetails = () => {
     console.log(reviews?.data);
 
     useEffect(() => {
+
         const filteredReview = reviews?.data.filter(rev => rev.roomId == roomId)
         setReview(filteredReview);
 
         const filterDate = bookings?.data.filter(room => room.roomId == roomId)
         setFilteredDate(filterDate)
     },
-        [reviews?.data, roomId, bookings?.data, _id])
+        [reviews?.data, roomId, _id, bookings?.data])
 
-    // console.log(reviewCount);
+
 
 
     const handleInputChange = (e) => {
@@ -94,13 +110,7 @@ const RoomDetails = () => {
 
 
 
-    if (newBookedDate == bookingDate) {
-        Swal.fire(
-            'Not available!',
-            'already booked in this date, please choose another one',
-            'error'
-        )
-    }
+   
 
 
 
@@ -112,18 +122,19 @@ const RoomDetails = () => {
         }
 
         const bookings = {
-            // name,
-            // email,
             bookingDate,
             available_seats: seat,
             image,
             room_name,
             price,
-            roomId
+            roomId,
+            email
+    
+
 
 
         }
-        // console.log(bookings);
+        console.log(bookings);
 
         axios.post('/bookings', bookings)
             .then(res => {
@@ -156,7 +167,13 @@ const RoomDetails = () => {
     // review based onn stars
 
 
-
+    if (newBookedDate == bookingDate) {
+        Swal.fire(
+            'Not available!',
+            'already booked in this date, please choose another one',
+            'error'
+        )
+    }
     return (
         <>
             <div className=" mt-8 border max-w-7xl mx-auto border-gray-200 rounded-lg  grid md:grid-cols-2 gap-16">
@@ -185,7 +202,7 @@ const RoomDetails = () => {
 
                     <div className="mt-6 flex items-center gap-4">
                         <p className={`${seat == 0 ? 'text-xl btn text-white font-semibold capitalize bg-gray-400 hover:bg-red-600' : 'text-xl btn font-normal capitalize'}`}>Available Seats: {seat}</p>
-                        <span className="text-2xl font-bold ">${offers ? (price - discountedPrice) : price}/Per Night</span>
+                        <span className="text-2xl font-bold ">${offers && seat > 0  ? (price - discountedPrice) : price}/Per Night</span>
                         {offers && seat > 0 && <span className="text-2xl text-purple-500 font-bold ">({offers}% off)</span>}
 
                     </div>
@@ -199,11 +216,12 @@ const RoomDetails = () => {
                                         <label className="label">
                                             <span className="label-text font-semibold text-xl">Choose the date</span>
                                         </label>
-                                        <input onChange={handleInputChange} type="date" name='date' placeholder="Email" className="input  input-bordered" required />
+                                        <input  onChange={handleInputChange} type="date" name='date' placeholder="date" className="input  input-bordered" required />
                                     </form>
                                     <div className="form-control mt-6">
 
-                                        {
+                                       { !user ? <NavLink to='/login' className="btn border-none text-white hover:bg-purple-700 bg-purple-600"><button className="btn border-none text-white hover:bg-purple-700 bg-purple-600">Login to book</button></NavLink>
+                                                     : <> {
                                             seat == 0 || bookingDate == newBookedDate ? <p className="btn   text-lg  bg-base-600 ">Unavailable</p> :
                                                 <><button className="btn border-none text-white hover:bg-purple-700 bg-purple-600" onClick={() => document.getElementById('my_modal').showModal()}>Book Now</button>
                                                     <dialog id={'my_modal'} className="modal  sm:modal-middle">
@@ -226,7 +244,7 @@ const RoomDetails = () => {
                                                                 </form>
                                                             </div>
                                                         </div>
-                                                    </dialog></>}
+                                                    </dialog></>} </> }
                                     </div>
                                 </div>
 
@@ -235,8 +253,8 @@ const RoomDetails = () => {
                     </div>
                 </div>
             </div>
-            {review?.length > 0 && <> <h2 className=' text-center text-3xl font-semibold mt-12'>Testomonials by our clients</h2>
-                <div className='grid grid-cols-4 gap-4 mt-4 p-6'>
+            {review?.length > 0 && <> <h2 className=' text-center text-3xl font-semibold mt-12'>Awesome reviews by our clients</h2>
+                <div className='grid grid-cols-4 gap-8 mt-4 p-6 max-w-7xl mx-auto'>
                     {
                         review?.map(rating => <Review key={rating._id} rating={rating}></Review>)
                     }

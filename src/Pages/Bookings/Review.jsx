@@ -1,10 +1,12 @@
-import React from 'react';
+
 
 const Review = ({ rating }) => {
     console.log(rating);
-    const { stars, review, currentDate } = rating
+    const { stars, review, currentDate, name, img } = rating
 
     console.log(stars, review);
+    
+    const avatar = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSk_-YhhKYVQiw5tD49InIqZMOpiqAaE7T79jUbNds&s'
 
     return (
 
@@ -12,11 +14,11 @@ const Review = ({ rating }) => {
             <div className="flex items-center mb-4 space-x-4">
                 <div className="avatar">
                     <div className="w-12 rounded-full ring ring-success ring-offset-base-100 ring-offset-2">
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSk_-YhhKYVQiw5tD49InIqZMOpiqAaE7T79jUbNds&s" />
+                        <img src={img ? img : avatar} />
                     </div>
                 </div>
                 <div className="space-y-1 font-medium dark:text-white">
-                    <p>Jese Leos <time dateTime={currentDate} className="block text-sm text-gray-500 dark:text-gray-400">{currentDate}</time></p>
+                    <p className='text-gray-500'>{name} <time dateTime={currentDate} className="block text-sm text-gray-500 dark:text-gray-400">{currentDate}</time></p>
                 </div>
             </div>
             <div>

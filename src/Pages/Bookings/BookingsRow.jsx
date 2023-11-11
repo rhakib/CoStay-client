@@ -1,17 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import useAxios from '../../Hooks/useAxios';
 import Swal from 'sweetalert2';
+import useAuth from '../../Hooks/useAuth';
 
 const BookingsRow = ({ booking, handleDelete, refetch }) => {
 
+    
+
 
     const { _id, room_name, price, image, bookingDate, roomId } = booking;
+
+    const {user} = useAuth()
+
+    const name = user?.displayName
+    const img = user?.photoURL
 
 
     const [cancel, setCancel] = useState(0)
     const [inputValue, setInputValue] = useState('')
     const [review, setReview] = useState('')
-    const [stars, setStars] = useState([])
+    const [stars, setStars] = useState(5)
 
     const axios = useAxios()
 
@@ -100,7 +108,9 @@ const BookingsRow = ({ booking, handleDelete, refetch }) => {
             review,
             roomId,
             stars: [stars],
-            currentDate
+            currentDate,
+            name,
+            img
         }
 
         axios.post('/review', userReview)
@@ -147,9 +157,9 @@ const BookingsRow = ({ booking, handleDelete, refetch }) => {
                             <form method="dialog" className='space-y-4 gap-4'>
                                 <textarea rows='5' cols='50' onChange={handleReviewInput} type="text " className='p-2 rounded-lg' />
                                 <p className='font-semibold'>How much you enjoyed?</p>
-                                <select onChange={handleStars} className='bg-gray-300 py-1 px-2 rounded-md font-semibold' name="" id="">
+                                <select defaultValue={5} onChange={handleStars} className='bg-gray-300 py-1 px-2 rounded-md font-semibold' name="" id="">
                                     <option value="1" >1</option>
-                                    <option value="2"defaultChecked>2</option>
+                                    <option value="2">2</option>
                                     <option value="3">3</option>
                                     <option value="4">4</option>
                                     <option value="5">5</option>

@@ -10,9 +10,10 @@ const MyBookings = () => {
 
     const { user } = useAuth()
     const axios = useAxios()
+    const email = user?.email
 
     const getBookings = async () => {
-        const res = await axios.get(`/bookings`)
+        const res = await axios.get(`/bookings?email=${email}`)
         return res;
 
     }

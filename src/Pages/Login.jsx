@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 
 import useAuth from '../Hooks/useAuth';
@@ -11,6 +11,7 @@ const Login = () => {
 
     const { signInUser } = useAuth()
     const navigate = useNavigate()
+    const location = useLocation()
 
     const handleLogin = (e) => {
 
@@ -25,7 +26,7 @@ const Login = () => {
             .then(res => {
                 console.log(res)
                 toast.success('Successfuly logged in')
-                navigate('/')
+                navigate(location?.state ? location.state : '/')
 
 
             })
