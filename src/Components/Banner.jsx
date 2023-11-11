@@ -1,35 +1,22 @@
-import AwesomeSlider from 'react-awesome-slider';
-import withAutoplay from 'react-awesome-slider/dist/autoplay';
-import 'react-awesome-slider/dist/styles.css';
 
+import { Link } from 'react-router-dom';
+import bannerBg from '../assets/bannerBg.mp4';
 
 const Banner = () => {
 
-  const AutoplaySlider = withAutoplay(AwesomeSlider);
 
   return (
-    <div >
-      <AutoplaySlider className='h-[600px]'
-        play={true}
-        cancelOnInteraction={false} 
-        interval={3000}
-      >
+    <div className='w-full relative '>
+     <div className='absolute top-0 w-[100%] h-[100%]' style={{backgroundColor: 'rgba(0, 0, 0, .7)'}}>
 
-
-        <div data-src="https://i.ibb.co/FJ6gnfS/495698793.jpg"> 
+     </div>
+      <video className='w-[100%] h-[95vh]  object-cover' src={bannerBg} autoPlay loop muted></video>
+      <div className="content absolute w-[100%]  flex flex-col justify-center items-center text-white top-72">
+        <h1 className='md:text-6xl text-5xl font-semibold'>Welcome to CoStay</h1>
+        <p className='text-2xl mt-4'>Explore the best hotel in town</p>
+        <Link to='/rooms'><button className='btn mt-4 opacity-70 border-none hover:text-white hover:bg-black'>Book Now</button></Link>
         
-        </div>
-
-
-        <div data-src="https://i.ibb.co/FJ6gnfS/495698793.jpg"> 
-        
-        </div>
-
-        
-        <div data-src="https://cf2.bstatic.com/xdata/images/hotel/max1024x768/487273308.jpg?k=74888cd4b506917e45ad6f4ca5059305737596e277b1d37d73a8529c121df2ba&o=&hp=1"> 
-        
-        </div>
-      </AutoplaySlider>
+      </div>
     </div>
   );
 };

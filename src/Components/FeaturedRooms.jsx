@@ -44,7 +44,7 @@ const FeaturedRooms = () => {
             <Container>    
                 <h2 className='text-center text-5xl font-semibold mt-16'>Our Featured Rooms</h2>
                 <hr className='w-1/2 mx-auto bg-gray-400 mt-5 mb-10 p-[2px]'/>    
-                <div className='grid md:grid-cols-3 gap-5'>
+                <div className='grid md:grid-cols-3 gap-5 p-4'>
                     {
                         rooms?.data.map(room => <RoomsCard rooms={rooms} key={room._id} room={room}></RoomsCard>)
 

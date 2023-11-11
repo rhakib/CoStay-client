@@ -11,14 +11,14 @@ const Testomonials = () => {
     <div>
       <h2 className='text-center text-5xl font-semibold mt-6'>Testomonials</h2>
       <hr className='w-1/4 mx-auto bg-gray-400 mt-5 mb-10 p-[2px]'/>
-      <AutoplaySlider className='h-[600px]'
+      <AutoplaySlider className='h-[800px] md:h-[600px]'
         play={true}
         cancelOnInteraction={false} // should stop playing on user interaction
         interval={3000}
       >
 
         <div className='bg-gray-200 h-full flex-col-reverse md:flex-row flex  gap-4 md:gap-20 justify-center p-20'>
-          <div className=' md:w-1/3 flex flex-col justify-center'>
+          <div className='w-full md:w-1/3 flex flex-col justify-center'>
             <div className="flex gap-0.5 text-green-500">
               <svg
                 className="h-5 w-5"
@@ -78,14 +78,11 @@ const Testomonials = () => {
 
             <div className="mt-4">
               <p className="text-2xl font-bold text-rose-600 sm:text-3xl">
-                Stayin' Alive
+              A Cozy Oasis
               </p>
 
               <p className="mt-4 leading-relaxed text-gray-700">
-                No, Rose, they are not breathing. And they have no arms or
-                legs … Where are they? You know what? If we come across
-                somebody with no arms or legs, do we bother resuscitating
-                them? I mean, what quality of life do we have there?
+              "My stay at this hotel room was nothing short of amazing. The room had a warm and cozy ambiance that immediately made me feel at home. The attention to detail in the decor and furnishings was impressive. The bed was exceptionally comfortable, and the overall cleanliness of the room was top-notch. I enjoyed every moment of my stay and would highly recommend this room to anyone seeking a relaxing and comfortable retreat."
               </p>
             </div>
             <footer className="mt-4 text-sm font-medium text-gray-700 sm:mt-6">
@@ -161,18 +158,15 @@ const Testomonials = () => {
 
             <div className="mt-4">
               <p className="text-2xl font-bold text-rose-600 sm:text-3xl">
-                Stayin' Alive
+              Breathtaking Views
               </p>
 
               <p className="mt-4 leading-relaxed text-gray-700">
-                No, Rose, they are not breathing. And they have no arms or
-                legs … Where are they? You know what? If we come across
-                somebody with no arms or legs, do we bother resuscitating
-                them? I mean, what quality of life do we have there?
+              "The panoramic views from this hotel room were absolutely breathtaking. Waking up to the sight of the city skyline and the distant mountains was a highlight of my stay. The room was well-designed to maximize natural light, and the large windows provided a stunning backdrop. The amenities were modern and well-maintained, contributing to an overall luxurious experience. If you appreciate a room with a view, this is the place to be."
               </p>
             </div>
             <footer className="mt-4 text-sm font-medium text-gray-700 sm:mt-6">
-              &mdash; Michael Scott
+              &mdash; Thomas Johnson
             </footer>
           </div>
 
@@ -244,18 +238,15 @@ const Testomonials = () => {
 
             <div className="mt-4">
               <p className="text-2xl font-bold text-rose-600 sm:text-3xl">
-                Stayin' Alive
+              Exceptional Service
               </p>
 
               <p className="mt-4 leading-relaxed text-gray-700">
-                No, Rose, they are not breathing. And they have no arms or
-                legs … Where are they? You know what? If we come across
-                somebody with no arms or legs, do we bother resuscitating
-                them? I mean, what quality of life do we have there?
+              "What sets this hotel room apart is the exceptional service. From the moment I checked in until I left, the staff went above and beyond to ensure my comfort. The room was meticulously cleaned daily, and any special requests were promptly fulfilled. The attention to customer satisfaction was evident in every interaction. It's not just a room; it's an experience, thanks to the dedicated and friendly hotel staff. I would gladly return for another stay."
               </p>
             </div>
             <footer className="mt-4 text-sm font-medium text-gray-700 sm:mt-6">
-              &mdash; Michael Scott
+              &mdash; Sophie Anderson
             </footer>
           </div>
 
