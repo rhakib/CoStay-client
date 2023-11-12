@@ -5,6 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 import Swal from 'sweetalert2';
 import Review from '../Bookings/Review';
 import useAuth from '../../Hooks/useAuth';
+import { BsArrowRightCircleFill } from 'react-icons/bs'
 
 
 const RoomDetails = () => {
@@ -177,34 +178,36 @@ const RoomDetails = () => {
                         <img src={img4} alt="" className='p-4 transition hover:scale-150' />
                     </div>
 
+                    <div className='ml-4'>
+                        <h2 className='text-3xl font-semibold my-4'>Amenities</h2>
+                        <div className='grid grid-cols-2'>
+                            {
+                                amenities?.map((item, idx) => <div className='flex items-center gap-2' key={idx}><BsArrowRightCircleFill></BsArrowRightCircleFill><p className='text-xl'>{item}</p></div>)
+                            }
+                        </div>
+                    </div>
                 </div>
 
                 <div className="flex flex-col p-4 md:p-1  space-y-3">
 
                     <div className='space-y-6 md:ml-16 lg:ml-0'>
-                        <h5 className="text-5xl font-semibold tracking-tight  ">{room_name}</h5>
+                        <h5 className="text-5xl font-semibold tracking-tight mt-4 ">{room_name}</h5>
                         <h5 className="tracking-tight text-gray-900 dark:text-white"></h5>
                         <p className='md:w-[480px]'>{description}</p>
-                        <div>
-                            <h2 className='text-3xl font-semibold'>Amenities</h2>
-                            {
-                                amenities?.map((item, idx) => <li key={idx}>{item}</li>)
-                            }
-                        </div>
                         <p className='font-bold'>Room Size: {room_size}</p>
-                    <div className="mt-6 flex items-center gap-4">
-                        <p className={`${seat == 0 ? 'text-xl btn text-white font-semibold capitalize bg-gray-400 hover:bg-red-600' : 'text-xl btn font-normal capitalize'}`}>Available Seats: {seat}</p>
-                        <span className="text-2xl font-bold ">${offers && seat > 0 ? (price - discountedPrice) : price}/Per Night</span>
-                        {offers && seat > 0 && <span className="text-2xl text-purple-500 font-bold ">({offers}% off)</span>}
+                        <div className="mt-6 flex items-center md:gap-4">
+                            <p className={`${seat == 0 ? 'text-xl btn text-white font-semibold capitalize bg-gray-400 hover:bg-red-600' : 'text-xl btn font-normal capitalize'}`}>Available Seats: {seat}</p>
+                            <p className="md:text-2xl font-bold ">${offers && seat > 0 ? (price - discountedPrice) : price}/Night</p>
+                            {offers && seat > 0 && <span className="md:text-2xl text-purple-500 font-bold "> <span className='line-through text-neutral'>${price}</span> ({offers}% off)</span>}
 
-                    </div>
+                        </div>
                     </div>
 
 
 
                     <div className="hero pb-12" >
                         <div className="hero-content flex-col">
-                            <div className="card flex-shrink-0 w-[350px] md:w-[400px]  shadow-2xl mt-6 glass  bg-gray-400">
+                            <div className="card flex-shrink-0 w-[350px] md:w-[400px]  shadow-2xl mt-6  bg-gray-400">
                                 <div className="card-body">
                                     <form className="form-control">
                                         <label className="label">
@@ -248,7 +251,8 @@ const RoomDetails = () => {
                 </div>
             </div>
             {review?.length > 0 && <> <h2 className=' text-center text-3xl font-semibold mt-12'>Awesome reviews by our clients</h2>
-                <div className='grid grid-cols-4 gap-8 mt-4 p-6 max-w-7xl mx-auto'>
+            <hr className='w-1/3 mx-auto mt-4'/>
+                <div className='grid md:grid-cols-3 lg:grid-cols-4 gap-8 mt-4 p-6 max-w-7xl mx-auto'>
                     {
                         review?.map(rating => <Review key={rating._id} rating={rating}></Review>)
                     }

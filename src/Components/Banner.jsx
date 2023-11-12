@@ -11,8 +11,8 @@ const Banner = () => {
 
      </div>
       <video className='w-[100%] h-[95vh]  object-cover' src={bannerBg} autoPlay loop muted></video>
-      <div data-aos="fade-right" className="content absolute w-[100%]  flex flex-col justify-center items-center text-white top-72">
-        <h1 className='md:text-6xl text-5xl font-semibold'>Welcome to CoStay</h1>
+      <div className="content absolute w-[100%]  flex flex-col justify-center items-center right-3 text-white top-72">
+        <h1 className='md:text-6xl text-4xl font-semibold'>Welcome to CoStay</h1>
         <p className='text-2xl mt-4'>Explore the best hotel in town</p>
         <Link to='/rooms'><button className='btn mt-4 opacity-70 border-none hover:text-white hover:bg-black'>Book Now</button></Link>
         
