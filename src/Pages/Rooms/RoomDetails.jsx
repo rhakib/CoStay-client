@@ -34,7 +34,7 @@ const RoomDetails = () => {
 
     useEffect(() => {
 
-        fetch(`http://localhost:5000/rooms/${id}`)
+        fetch(`https://costay-11-server.vercel.app/rooms/${id}`)
             .then(res => res.json())
             .then(data => {
                 setRooms(data)
