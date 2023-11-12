@@ -1,10 +1,13 @@
 import React from 'react';
 import Team from '../Components/Team';
+import { Helmet } from 'react-helmet';
 
 const About = () => {
     return (
         <>
-
+        <Helmet>
+                <title>About Us</title>
+            </Helmet>
             <div className='max-w-7xl mx-auto'>
                 <div className="flex flex-col-reverse lg:flex-row items-center gap-10 p-10">
                     <div className="flex-1">

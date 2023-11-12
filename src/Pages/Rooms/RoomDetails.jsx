@@ -6,6 +6,7 @@ import Swal from 'sweetalert2';
 import Review from '../Bookings/Review';
 import useAuth from '../../Hooks/useAuth';
 import { BsArrowRightCircleFill } from 'react-icons/bs'
+import { Helmet } from 'react-helmet';
 
 
 const RoomDetails = () => {
@@ -22,10 +23,7 @@ const RoomDetails = () => {
     const [review, setReview] = useState([])
     const [seat, setSeat] = useState()
 
-
-
     const axios = useAxios()
-
 
     const { _id, roomId, room_name, description, price, amenities, offers, room_size, available_seats, img1, img2, img3, img4 } = rooms || '';
     const newBookedDate = bookedDate.bookingDate
@@ -42,11 +40,7 @@ const RoomDetails = () => {
                 setRooms(data)
             })
 
-
-
     }, [id,])
-
-
 
     const getBookings = async () => {
         const res = await axios.get(`/bookings`)
@@ -113,7 +107,6 @@ const RoomDetails = () => {
             setSeat(seat - 1)
         }
 
-
         const bookings = {
             bookingDate,
             available_seats: seat,
@@ -168,6 +161,9 @@ const RoomDetails = () => {
 
     return (
         <>
+            <Helmet>
+                <title>{room_name}</title>
+            </Helmet>
             <div className=" mt-8 border max-w-7xl mx-auto border-gray-200 rounded-lg  md:grid-cols-1 grid  lg:grid-cols-2 gap-16">
 
                 <div>
@@ -217,7 +213,7 @@ const RoomDetails = () => {
                                     </form>
                                     <div className="form-control mt-6">
 
-                                        {!user ? <NavLink to='/login' className="btn border-none text-white hover:bg-purple-700 bg-purple-600"><button className="btn border-none text-white hover:bg-purple-700 bg-purple-600">Login to book</button></NavLink>
+                                        {!user ? <NavLink to='/login' className="btn border-none text-white hover:bg-gray-700 bg-gray-500"><button className="btn border-none text-white hover:bg-gray-700 bg-gray-500">Login to book</button></NavLink>
                                             : <> {
                                                 seat == 0 || bookingDate == newBookedDate ? <p className="btn   text-lg  bg-base-600 ">Unavailable</p> :
                                                     <>{!bookingDate ? <button className="btn border-none text-white hover:bg-gray-700 bg-gray-500">Select a date</button> : <button className="btn border-none text-white hover:bg-gray-700 bg-gray-500" onClick={() => document.getElementById('my_modal').showModal()}>Book Now</button>}
@@ -251,7 +247,7 @@ const RoomDetails = () => {
                 </div>
             </div>
             {review?.length > 0 && <> <h2 className=' text-center text-3xl font-semibold mt-12'>Awesome reviews by our clients</h2>
-            <hr className='w-1/3 mx-auto mt-4'/>
+                <hr className='w-1/3 mx-auto mt-4' />
                 <div className='grid md:grid-cols-3 lg:grid-cols-4 gap-8 mt-4 p-6 max-w-7xl mx-auto'>
                     {
                         review?.map(rating => <Review key={rating._id} rating={rating}></Review>)

@@ -3,6 +3,7 @@ import useAxios from '../../Hooks/useAxios';
 import { useQuery } from '@tanstack/react-query';
 import Container from '../../Container/Container';
 import RoomsCard from './RoomsCard';
+import {Helmet} from "react-helmet";
 
 
 const Rooms = () => {
@@ -41,6 +42,9 @@ const Rooms = () => {
 
     return (
         <Container>
+            <Helmet>
+                <title>Rooms</title>
+            </Helmet>
             <select onChange={(e) => sortbyPrice(e)} className="select select-bordered w-full max-w-xs my-6">
                                 <option disabled selected>Filter by Price</option>
                                 <option value='asc'>Low to High</option>

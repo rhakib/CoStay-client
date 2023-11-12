@@ -5,6 +5,7 @@ import BookingsRow from './BookingsRow';
 import { Link } from 'react-router-dom';
 import useAuth from '../../Hooks/useAuth';
 import Swal from 'sweetalert2';
+import {Helmet} from "react-helmet";
 
 const MyBookings = () => {
 
@@ -70,7 +71,11 @@ const MyBookings = () => {
 
 
     return (
+        
         <div className='max-w-[1200px] mx-auto w-full'>
+            <Helmet>
+                <title>My Bookings</title>
+            </Helmet>
             <h2 className='text-center text-3xl my-8'>Your Bookings</h2>
             <hr />
             {

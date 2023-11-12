@@ -1,9 +1,13 @@
-import React from 'react';
+import logo from '../assets/logoC.png';
 import { NavLink } from 'react-router-dom';
 
 const Footer = () => {
     return (
-        <footer className="footer p-10 bg-base-200 text-base-content">
+        <footer className="footer max-w-7xl mx-auto p-10 text-base-content">
+            <nav>
+                <img src={logo} className='w-52' alt="" />
+                <p className='ml-6 text-lg font-semibold'>Live Like Home</p>
+            </nav>
             <nav>
                 <header className="footer-title">Services</header>
                 <NavLink to='http://localhost:5173/rooms' className="link link-hover">Rooms</NavLink>
@@ -24,18 +28,7 @@ const Footer = () => {
                 <a className="link link-hover">Terms of use</a>
                 <a className="link link-hover">Cookie policy</a>
             </nav>
-            <form>
-                <header className="footer-title">Newsletter</header>
-                <fieldset className="form-control w-80">
-                    <label className="label">
-                        <span className="label-text">Enter your email address</span>
-                    </label>
-                    <div className="relative">
-                        <input type="text" placeholder="Your email" className="input input-bordered w-full pr-16" />
-                        <button className="btn text-neutral font-semibold bg-gray-300 absolute top-0 right-0 rounded-l-none">Subscribe</button>
-                    </div>
-                </fieldset>
-            </form>
+            
         </footer>
     );
 };

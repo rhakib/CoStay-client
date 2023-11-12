@@ -1,8 +1,12 @@
 import React from 'react';
+import { Helmet } from 'react-helmet';
 
 const Privacy = () => {
     return (
-        <div className='p-10'>
+        <div className='max-w-7xl mx-auto p-10'>
+            <Helmet>
+                <title>Privacy policy</title>
+            </Helmet>
             <div className="">
                 <h2 className="text-3xl font-semibold mb-5">CoStay Privacy Statement</h2>
                 <p className="mb-5">CoStay LLC owns and operates an online platform that provides users with information, recommendations and services related to travel and leisure, including tools for researching and/or booking hotels, rentals and other accommodations, attractions and experiences, restaurants, flights, and cruises, among other leisure-related services. In this Statement, we refer to these as our “Services”.</p>

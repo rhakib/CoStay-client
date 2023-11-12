@@ -1,9 +1,13 @@
 import React from 'react';
+import { Helmet } from 'react-helmet';
 import { BsArrowRightCircleFill } from 'react-icons/bs'
 
 const FaqPage = () => {
     return (
         <div className='max-w-6xl mx-auto'>
+            <Helmet>
+                <title>FAQ</title>
+            </Helmet>
               <h2 className="text-center my-10 text-3xl  md:text-5xl font-semibold">FAQ's - Frequently Asked Questions</h2>
             <div className="collapse collapse-arrow bg-base-200">
                 <input type="radio" name="my-accordion-2" />

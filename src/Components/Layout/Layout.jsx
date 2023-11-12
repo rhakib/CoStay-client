@@ -1,5 +1,6 @@
 import MainLayout from './MainLayout';
 import { Outlet } from 'react-router-dom';
+import {Helmet} from "react-helmet";
 
 
 
@@ -7,6 +8,10 @@ import { Outlet } from 'react-router-dom';
 const Layout = () => {
     return (
         <MainLayout>
+            <Helmet>
+                <title>CoStay - Home</title>
+            </Helmet>
+        
             <Outlet></Outlet>
         </MainLayout>
     );
