@@ -33,7 +33,7 @@ const MainLayout = ({ children }) => {
 
                             <NavBar></NavBar>
                         </div>
-                        <div className="bg-base-200 lg:hidden rounded-xl">
+                        <div className="lg:hidden rounded-xl">
                             {user && <div className="dropdown dropdown-end">
                                 <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
                                     <div className="w-10 rounded-full">

@@ -11,6 +11,7 @@ import PrivateRoute from "./PrivateRoute";
 import ErrorPage from "../Pages/ErrorPage";
 import About from "../Pages/About";
 import FaqPage from "../Pages/FaqPage";
+import Privacy from "../Pages/Privacy";
 
 const router = createBrowserRouter([
     {
@@ -52,6 +53,10 @@ const router = createBrowserRouter([
             {
                 path: '/faq',
                 element: <FaqPage></FaqPage>
+            },
+            {
+                path: '/privacy',
+                element: <Privacy></Privacy>
             }
         ]
     },

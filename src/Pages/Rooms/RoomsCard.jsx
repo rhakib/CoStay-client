@@ -2,6 +2,8 @@ import { useQuery } from '@tanstack/react-query';
 import  { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import useAxios from '../../Hooks/useAxios';
+import Aos from 'aos';
+import 'aos/dist/aos.css'
 
 const RoomsCard = ({ room }) => {
     const { roomId, _id, room_name,  price, available_seats, img1, } = room;
@@ -34,6 +36,7 @@ const RoomsCard = ({ room }) => {
     useEffect(() => {
         const filteredReview = reviews?.data.filter(rev => rev.roomId == roomId)
         setReview(filteredReview);
+        Aos.init()
 
 
 
@@ -52,7 +55,7 @@ const RoomsCard = ({ room }) => {
 
     return (
         <div >
-            <div data-aos="zoom-in-right"  data-aos-duration="3000"  className='relative'>
+            <div data-aos="zoom-in-right"  data-aos-duration="2000"  className='relative'>
                 <Link to={`/rooms/${_id}`}><img  alt="" src={img1} className='rounded-t-md w-[402px] h-[250px] lg:h-[300px] ' /></Link>
                 <div className='flex p-4 justify-between h-20 rounded-b-lg bg-gray-200'>
                     <h3 className='text-xl text-center font-semibold'>{room_name}</h3>

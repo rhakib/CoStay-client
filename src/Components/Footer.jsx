@@ -20,7 +20,7 @@ const Footer = () => {
             </nav>
             <nav>
                 <header className="footer-title">Legal</header>
-                <a className="link link-hover">Privacy policy</a>
+                <NavLink to='http://localhost:5173/privacy' className="link link-hover">Privacy policy</NavLink>
                 <a className="link link-hover">Terms of use</a>
                 <a className="link link-hover">Cookie policy</a>
             </nav>
@@ -31,8 +31,8 @@ const Footer = () => {
                         <span className="label-text">Enter your email address</span>
                     </label>
                     <div className="relative">
-                        <input type="text" placeholder="username@site.com" className="input input-bordered w-full pr-16" />
-                        <button className="btn btn-primary absolute top-0 right-0 rounded-l-none">Subscribe</button>
+                        <input type="text" placeholder="Your email" className="input input-bordered w-full pr-16" />
+                        <button className="btn text-neutral font-semibold bg-gray-300 absolute top-0 right-0 rounded-l-none">Subscribe</button>
                     </div>
                 </fieldset>
             </form>

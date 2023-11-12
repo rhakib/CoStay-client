@@ -100,8 +100,6 @@ const BookingsRow = ({ booking, handleDelete, refetch }) => {
 
     }
 
-
-
     const handleReview = () => {
 
         const userReview = {
@@ -185,7 +183,7 @@ const BookingsRow = ({ booking, handleDelete, refetch }) => {
                             <form method="dialog" className='flex gap-4'>
                                 <input onChange={handleInputChange} type="date" className='p-2 rounded-lg' />
 
-                                <button onClick={() => handleUpdate(_id)} className="btn text-white bg-gray-600 hover:bg-gray-800">Update</button>
+                                {!inputValue ? <button className="btn text-white bg-gray-600 hover:bg-gray-800">Select</button> :<button onClick={() => handleUpdate(_id)} className="btn text-white bg-gray-600 hover:bg-gray-800">Update</button>}
 
                                 <button className="btn bg-red-500 hover:bg-red-800 text-white">Cancel</button>
                             </form>

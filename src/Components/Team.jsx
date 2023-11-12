@@ -7,7 +7,8 @@ const Team = () => {
         <div>
             <h2 className="text-center text-5xl mt-12 font-medium">Our Team</h2>
             <p className="text-center w-1/2 mx-auto text-lg my-6">"Leading with a vision, our General Manager orchestrates the symphony of services, ensuring every guest feels at home."</p>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 p-10 md:p-20 bg-base-300">
+            <div className=' bg-base-300'>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 p-10 md:p-20 max-w-7xl mx-auto">
                 <div data-aos="zoom-out-up" className="flex flex-col items-center bg-slate-400 py-10 rounded-lg">
                     <div className="w-[200px] h-[200px]">
                         <img src="https://i.ibb.co/hY2ZsZL/manager.jpg" alt="" className="w-full h-full object-cover rounded-full" />
@@ -50,6 +51,7 @@ const Team = () => {
                         <AiFillLinkedin></AiFillLinkedin>
                     </div>
                 </div>
+            </div>
             </div>
         </div>
     );

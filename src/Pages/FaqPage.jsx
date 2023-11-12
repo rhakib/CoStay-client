@@ -6,7 +6,7 @@ const FaqPage = () => {
         <div className='max-w-6xl mx-auto'>
               <h2 className="text-center my-10 text-3xl  md:text-5xl font-semibold">FAQ's - Frequently Asked Questions</h2>
             <div className="collapse collapse-arrow bg-base-200">
-                <input type="radio" name="my-accordion-2" checked="checked" />
+                <input type="radio" name="my-accordion-2" />
                 <div className="collapse-title text-xl font-medium">
                     What's CoStay?
                 </div>
