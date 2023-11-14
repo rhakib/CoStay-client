@@ -45,6 +45,8 @@ const Rooms = () => {
             <Helmet>
                 <title>Rooms</title>
             </Helmet>
+            <h2 className='text-4xl text-center font-semibold mt-6'>Our Available Rooms</h2>
+            <hr className='w-52 mx-auto border-b-2 mt-4 border-gray-500'/>
             <select onChange={(e) => sortbyPrice(e)} className="select select-bordered w-full max-w-xs my-6">
                                 <option disabled selected>Filter by Price</option>
                                 <option value='asc'>Low to High</option>
