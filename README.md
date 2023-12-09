@@ -8,3 +8,15 @@
 3. **Booking room:** User will be able to book a room for specific date.
 4. **My bookings:** User will be able see his/her booking list and can cancel it before one day of booked date.
 5. **Giving reviews:** User will be able to share his/her experiences after booking a room.
+
+**Technologies:**
+
+I have used the following technologies to build this website:
+- HTML 5
+- CSS 3
+- Tailwind
+- JavaScript
+- React
+- Node.js
+- Express.js
+- MongoDb
