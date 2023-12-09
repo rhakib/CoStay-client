@@ -1,5 +1,7 @@
 **Website Name:** CoStay <br>
-**Website link:** https://costay-d3e93.web.app/
+**Client side repo:** https://github.com/rhakib/CoStay-client  <br>
+**Server side repo:** https://github.com/rhakib/CoStay-server  <br>
+**Website live link:** https://costay-d3e93.web.app/
 
 **Features:**
 
